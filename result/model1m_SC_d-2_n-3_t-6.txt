@@ -1,0 +1,16 @@
+|T|: 9
+|P|: 7
+|L|: 100
+clusters : full runs
+nb variables : 229066
+nb constrains : 438223
+total time :101.878286
+d(c) : 2
+delta(c) : 186
+n(c) : 3
+ĉ(c) : 1.000000
+
+(F E B A , [B C E F   A B E F   A E C F   A E B F   A F F F   A B E F H H   A E B F H   A E B G   A E E F   A B E F   A E C F   A E E F H   A B E F H   A E C F   A C E F   A B E F   A E C F   A E B F   A F F F   A C E F   A B E F   A B C F   A C E F   A B E F   A E B F   A F F F   A E E F H   A B E F H H   A E B F H   A E A G   A E E F H   A B E F   A E C F   A E B G H   A E E F H   A B E F H   A B E F   A E B F   A F F F   A B E F   A E C F   ],0.410000)
+(, [],0.000000)
+(H G D C A , [A C D G   A B G D   A D B G   C B D G   A C D G H   A C D G H H H   A C D G H   A B G D H   A D B G H H H   A B D G H   A C E F H   A E C F H H H   A E D G   A E B G H   A E D G H   A C D G   A B G D   A D B G   A B D G   A C D G H   A C D G H H H H   A C D G H   A B G D H   A D B G H H H   A D B G   A B D G   A E C F   A C E F H H   A C D G   A B G D   A D B G   A B D G   A E C F   A E D G H   A E D G H H H   A C D G H   A B G D H   A E B G H H H   A B D G H   A A C F H H H   A E D H G   A E D G H   A E C F   A C D G   A B G D   A D B G   A B D G   A C E F   A E C F   A C D G H   A C D G H H H H   A C D G H   A B G D H   A D B G H H H   A D B G   A B D G   A C E F   A C E F H H   A B C F   ],0.590000)
+(nc, [ ],0.000000)

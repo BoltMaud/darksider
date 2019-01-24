@@ -1,0 +1,16 @@
+|T|: 18
+|P|: 14
+|L|: 9
+clusters : full runs
+nb variables : 136512
+nb constrains : 295337
+total time :22.402069
+d(c) : 2
+delta(c) : 14
+n(c) : 3
+ĉ(c) : 0.777778
+
+(F E C A O M N L , [A C E L N M F D B   A C E L O M F D B   ],0.222222)
+(H F G D E C A , [A C E G H F D B   A C E G H F F B   A A C E G H F D B   ],0.333333)
+(I F E C A X3 X1 J , [A C E X3 I J X1 F D B   A C E X3 I J X1 F D B   ],0.222222)
+(nc, [ A C E X3 I J K I J X1 F D B   A C E X3 I J K I J K I J X1 F D B   ],0.222222)

@@ -1,0 +1,15 @@
+Cluster with centroid:
+A C E G H F D B 
+
+A C G E H F D B 
+A E C G H F D B 
+A C E B D G H F 
+A C E G H F D B 
+
+Cluster with centroid:
+A C AA AC AF AI AJ AD AH X2 AG AB D B 
+
+A AA AC AF AB AD AJ AH AE AI AG C AC AD D B 
+D C AA AC AF AD AJ AI AB AE A B AG AC AD AH 
+A C AA AC AG AF AC AH AI AJ AD AE AD AB D B 
+

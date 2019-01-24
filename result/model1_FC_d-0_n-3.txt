@@ -1,0 +1,16 @@
+|T|: 9
+|P|: 7
+|L|: 12
+clusters : full runs
+nb variables : 13854
+nb constrains : 26457
+total time :0.497173
+d(c) : 0
+delta(c) : 0
+n(c) : 3
+ĉ(c) : 0.250000
+
+(A C D G H , [A C D G H   ],0.083333)
+(A E B F , [A E B F   ],0.083333)
+(A C D G H H H H , [A C D G H H H H   ],0.083333)
+(nc, [ A C D G   A B G D   A D B G   A B D G   A C E F   A B E F   A E C F   A F F F   A E E F H   ],0.750000)
