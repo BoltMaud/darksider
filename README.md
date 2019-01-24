@@ -7,7 +7,7 @@
 
 ## INSTALLATION
 
- `make exe` 
+ `make 
 
 ## EXAMPLE OF UTILISATION 
 
