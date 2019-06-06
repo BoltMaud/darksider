@@ -7,22 +7,6 @@ open Logs
 open Printf
 open Solve_formulas_PB
 
-
-let extract_run list_sol lambda_ia sigma n =
-  let run = Array.make n "" in
-  for i = 1 to n do
-    iter (fun a -> if mem (lambda_ia i a) list_sol then run.(i-1) <- a) sigma;
-  done;
-  run
-
-let print_run oc run =
-  for i = 0 to (Array.length run) - 1 do
-    if run.(i) <> "w" then output_string oc (run.(i) ^ " ");
-  done;
-  output_newline oc
-
-
-
 (* formula is not quantified *)
 let pn_and_trace_to_formula_alignment_pb (pn : pn) (trace : alphabet array) (sigma : alphabet list)
     (n : int) d (* maximum distance for alignment *) =

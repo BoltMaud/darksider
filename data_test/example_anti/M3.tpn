@@ -1,0 +1,24 @@
+place "place_1" init 1;
+place "place_2";
+place "place_3";
+place "place_4";
+place "place_5";
+place "place_6";
+place "place_7";
+place "place_8";
+place "place_9";
+place "place_10";
+trans "t_1"~"A" in "place_1" out "place_2" "place_4";
+trans "t_1"~"B" in "place_2" out "place_3";
+trans "t_1"~"C" in "place_4" out "place_5";
+trans "t_1"~"D" in "place_2" "place_4" out "place_3" "place_5";
+trans "t_1"~"E" in "place_2" "place_4" out "place_3" "place_5";
+trans "t_1"~"F" in "place_3" "place_5" out "place_6" "place_8";
+trans "t_1"~"G" in "place_6" out "place_7";
+trans "t_1"~"H" in "place_8" out "place_9";
+trans "t_1"~"I" in "place_6" "place_8" out "place_7" "place_9";
+trans "t_1"~"J" in "place_6" "place_8" out "place_7" "place_9";
+trans "t_1"~"K" in "place_7" "place_9" out "place_10" ;
+
+
+

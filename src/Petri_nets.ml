@@ -30,14 +30,17 @@ let read_pn pn_file =
   and transitions  = ref []
   and place_counter = ref 0
   and initial_marking = ref [] 
-  and not_final_marking = ref [] in
+  and final_marking = ref [] in
   (try
      while true do
        match (Str.split (Str.regexp "[ \t;\r]+") (input_line ic)) with
-       | "place" :: p :: initialization ->
-    	  (places := (remove_quotes p) :: !places;
-	   if initialization <> [] then initial_marking := !place_counter :: !initial_marking;
-	   incr place_counter)
+       | "place" :: p :: initialization ->(
+	        places := (remove_quotes p) :: !places;
+		match initialization with 
+			| [] ->incr place_counter;
+			| "init" :: s ->initial_marking := !place_counter :: !initial_marking;incr place_counter;
+			| "final" :: s ->  final_marking := !place_counter :: !final_marking;incr place_counter;
+    	       		| _ -> failwith ("place error\n"))
        | "trans" :: tr :: "in" :: in_out ->
        	  let pre = ref []
        	  and rest_in_out = ref in_out in
@@ -46,8 +49,7 @@ let read_pn pn_file =
        	    rest_in_out := (tl !rest_in_out)
        	  done;
 	  let post = map (fun p -> (!place_counter - 1 - (pos (remove_quotes p) !places))) (tl !rest_in_out) in 
-	  not_final_marking := (filter (fun p ->  (not (mem p post))) !pre) @ !not_final_marking;
-       	  transitions :=
+	  transitions :=
        	    {pre = !pre;
        	     post = post ;
        	     lambda = nth (Str.split (Str.regexp "\"") tr) 2}
@@ -59,9 +61,13 @@ let read_pn pn_file =
   let list_places = list_of 0 (!place_counter - 1) (fun i -> i) in 
   {places = list_places ;
    transitions = !transitions;
-   m0 = !initial_marking; mf= (filter (fun p -> (not (mem p !not_final_marking))) list_places) }
-
+   m0 = !initial_marking; mf= !final_marking}
 let add_ww pn =
   {places = pn.places;
    transitions = {pre = []; post = []; lambda = "ww"} :: pn.transitions;
+   m0 = pn.m0; mf=pn.mf}
+
+let add_ww_at_the_end pn =
+  {places = pn.places;
+   transitions = ( map (fun fp -> {pre = [fp]; post = [fp]; lambda = "w"}) pn.mf ) @(* { pre=pn.mf;post=pn.mf;lambda="w" }  ::*) pn.transitions;
    m0 = pn.m0; mf=pn.mf}

@@ -179,7 +179,7 @@ let pn_and_traces_to_formula_subnetClustering_pb
            (fun k -> PB_leq ((map (fun t -> (1, (c_kt k t))) pn.transitions), nb_transitions_per_cluster))), 
 
     (* PB objective to be minimized *)
-    (concat @@
+    (*(concat @@
        (* minimize the number of common transitions *)
        list_of 0 (nb_clusters - 1)
          (fun k1 ->
@@ -190,7 +190,7 @@ let pn_and_traces_to_formula_subnetClustering_pb
 		)
  	  )
 	))
-	@
+	@*)
 	(* minimize the number of traces that are not classified *)
 	(list_of 0 (lenTraces -1)
 		(fun j-> (-10, (inC_j j) ) ))
@@ -199,7 +199,7 @@ let pn_and_traces_to_formula_subnetClustering_pb
 	(concat @@ 
 		(list_of 0 (lenTraces -1)
 		(fun j-> 
-			(list_of 1 size_of_run (fun i-> (1,diff_ji j i)))
+			(list_of 1 size_of_run (fun i-> (2,diff_ji j i)))
 		))
 	),
     fun list_sol -> 

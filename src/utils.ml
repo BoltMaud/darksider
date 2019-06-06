@@ -1,10 +1,26 @@
 open List
+open Printf
+
+
 
 let rec find l x n=
 	if l.(n) = x then n else find l x (n+1);;
 
 let output_newline (oc : out_channel) = output_string oc "\n"
 let output_int (oc : out_channel) n = output_string oc (string_of_int n)
+
+let extract_run list_sol lambda_ia sigma n =
+  let run = Array.make n "" in
+  for i = 1 to n do
+    iter (fun a -> if mem (lambda_ia i a) list_sol then run.(i-1) <- a) sigma;
+  done;
+  run
+
+let print_run oc run =
+  for i = 0 to (Array.length run) - 1 do
+     output_string oc (run.(i) ^ " ");
+  done;
+  output_newline oc
 
 let output_int_list (oc : out_channel) l =
   iter (fun n -> output_int oc n; output_string oc " ") l

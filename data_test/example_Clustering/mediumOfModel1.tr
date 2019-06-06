@@ -1,13 +1,13 @@
 A C D G
 A B G D
 A D B G
-A B D G
-A C E F
+C B D G
+B C E F
 A B E F 
 A E C F
 A E B F 
 A C D G H 
-A C D G H H H H
+A C D G H H H
 A F F F
 A C D G H
 A B G D H
@@ -56,20 +56,20 @@ A C E F
 A B E F 
 A E C F
 A E B F 
-A C D G H 
-A C D G H H H H
+A E D G H 
+A E D G H H H
 A F F F
 A C D G H
 A B G D H
-A D B G H H H
+A E B G H H H
 A B D G H
-A C E F H
+A E E F H
 A B E F H H 
-A E C F H H H 
+A A C F H H H 
 A E B F H 
-A E B G
-A E D G
-A E E F
+A E A G
+A E D H G
+A E E F H
 A B E F 
 A E C F
 A E B G H

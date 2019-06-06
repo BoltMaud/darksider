@@ -107,8 +107,8 @@ let pn_and_traces_to_formula_fullRunClustering_pb
 	(* minimize the number of traces that are not classified *)
 	(list_of 0 (lenTraces -1)
 		(fun j-> (-10, (inC_j j) ) )
-	@
-	(* minimize the number of diff*)
+	(*@
+	 (*minimize the number of diff*)
 	(concat @@ (list_of 0 (nb_clusters-1)
 		(fun k -> 
 		(concat @@ (list_of 0 (lenTraces-1)
@@ -116,7 +116,7 @@ let pn_and_traces_to_formula_fullRunClustering_pb
 			     ) 
 			   )
 		)))
-	)),
+	)*)),
 	fun list_sol ->
 	( (*Delta*)
 		(List.fold_left (+) 0 

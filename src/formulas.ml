@@ -215,3 +215,21 @@ let pb_formula_to_opb opb_file (f : pb_constraint list) (min_objective : pb_obje
 	Printf.fprintf oc ">= %d;\n" c))
     f;
   close_out oc
+
+
+let twoqbf_formula_to_qdimacs file num_vars forallVars existsVars cnf_formula=
+  let oc = open_out_bin file in
+  Printf.fprintf oc "p cnf %d %d\n" (num_vars+1) (length cnf_formula);
+  Printf.fprintf oc "a "; 
+  iter (fun v -> Printf.fprintf oc "%d " (v+1)) forallVars;
+  Printf.fprintf oc "0\ne ";
+  iter (fun v -> Printf.fprintf oc "%d " (v+1)) existsVars;
+  Printf.fprintf oc "0\n";
+  iter
+    (function (l_pos, l_neg) ->
+      output_int_list oc (map (fun i -> i+1) l_pos);
+      output_int_list oc (map (( * ) (-1)) (map (fun i -> i+1) l_neg));
+      output_int oc 0;
+      output_newline oc)
+    cnf_formula;
+  close_out oc;

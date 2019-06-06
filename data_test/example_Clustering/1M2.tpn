@@ -1,0 +1,10 @@
+place "place_1" init 1;
+place "place_2";
+place "place_3";
+place "place_4";
+trans "t_1"~"A" in "place_1" out "place_2" ;
+trans "t_2"~"B" in "place_2" out "place_3" ;
+trans "t_3"~"C" in "place_3" out "place_4" ;
+trans "t_3"~"D" in "place_3" out "place_4" ;
+trans "t_3"~"E" in "place_4" out "place_4" ;
+

@@ -7,8 +7,7 @@ open Printf
 
 let is_transition t pn
 		  (m1_p : place -> int) (* number of variable associated to place p in marking m1 *)
-		  (m2_p : place -> int) (* number of variable associated to place p in marking m2 *)
-  =
+		  (m2_p : place -> int) (* number of variable associated to place p in marking m2 *) =
   And([], [],
       map (fun p ->
 	   match (mem p t.pre, mem p t.post) with

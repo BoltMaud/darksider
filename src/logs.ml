@@ -3,6 +3,7 @@ open Utils
 open Formulas
 open Petri_nets
 open PN_to_formula
+open Printf
 
 let read_logs log_file =
   let ic = open_in_bin log_file
@@ -33,6 +34,11 @@ let logs_to_pn (logs : alphabet array list) =
 	   logs);
    m0 = [0]; mf=[]}
 
+let log_to_pn_with_w_at_the_end  (log : alphabet array) =
+	let {places = p; transitions = t; m0 = m; mf=mf} = logs_to_pn [log] in
+	{places = p;
+	 transitions =  {pre = [((length p)-1)]; post = [((length p)-1)] ; lambda = "w"}:: t;
+	 m0 = m; mf=[]}
 
 let logs_to_pn_with_w (logs : alphabet array list) =
   let {places = p; transitions = t; m0 = m; mf=mf} = logs_to_pn logs

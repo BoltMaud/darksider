@@ -6,14 +6,18 @@ open Printf
 open Logs
 open FullrunClustering_PB
 open SubnetClustering_PB
+open Alignment_PB_newEditDistance
+open Anti_alignment_PB_newEditDistance;;
+
 
 (*----------------------------------------------------------------------------------*)
 (* system command for PB solver *)
-let pb_solver = ref "minisat+"
+let pb_solver = ref "minisat+";;
+(* let pb_solver = ref "minisat+ -cb -ps+ -goal=-850 -1" *)
 
 (*----------------------------------------------------------------------------------*)
 (* exception for Unsatisfiable formulas *)
-exception Unsatisfiable
+exception Unsatisfiable;;
 
 (*----------------------------------------------------------------------------------*)
 (* from a sol file, extracts the variables which are true *)
@@ -23,8 +27,8 @@ let extract_solution
   and list_sol = ref [] in
   while ( mem (input_line solution_channel).[0]  ['c';'o'] ) do () done;
   (* the line starting by 's' has just been read *)
-  (* now, for minisat+ => solution with 'v' and sat4j => 1 line 'c' and then 'v'  *)
-  if !pb_solver<>"minisat+" then ignore (input_line solution_channel);
+  (* now, for minisat+ => solution with 'v' and sat4j => 1 line 'c' and then 'v'  
+  if !pb_solver<>"minisat+" then ignore (input_line solution_channel);*)
   let solution_scanning_channel = Scanf.Scanning.from_channel solution_channel in
   (try ignore (Scanf.bscanf solution_scanning_channel "v" (fun () -> ( )))
    with
@@ -38,7 +42,7 @@ let extract_solution
       else ignore (Scanf.bscanf solution_scanning_channel "x%d" (fun i -> if !pb_solver<>"minisat+" then i-1 else i))
     done
    with _ -> (Scanf.Scanning.close_in solution_scanning_channel; close_in solution_channel));
-  !list_sol
+  !list_sol;;
 
 (*----------------------------------------------------------------------------------*)
 let solve_enriched_formula_with_option opb_file option formula_builder =
@@ -55,13 +59,21 @@ let solve_enriched_formula_with_option opb_file option formula_builder =
   printf "Free memory in %f seconds.\n" (time_after_free -. time_after_formula);
   ignore (Sys.command (!pb_solver ^ " " ^ option ^ " " ^ opb_file ^ " > sol"));
   let end_time = Unix.gettimeofday() in
-  printf "Optimal solution found in %f seconds.\n%!" (end_time -. time_after_free);
+  (*printf "Optimal solution found in %f seconds.\n%!" (end_time -. time_after_free);*)
   printf "Total time: %f seconds.\n%!" (end_time -. start_time);
   (* return sol, nb variables, nb constraints, total time*)	
-  (extractor_function (extract_solution "sol")), (length ((cnf_to_pb cnf_formula) @ pb_constraints)), !ref_num_vars, (end_time -. start_time)
+  (extractor_function (extract_solution "sol")), (length ((cnf_to_pb cnf_formula) @ pb_constraints)), !ref_num_vars, (end_time -. start_time);;
 
 let solve_enriched_formula opb_file formula_builder  =
-  solve_enriched_formula_with_option opb_file "" formula_builder 
+  solve_enriched_formula_with_option opb_file "" formula_builder ;;
+
+(*----------------------------------------------------------------------------------*)
+let solve_2QBF_formula file formula_builder =
+	let num_vars, forallVars, existsVars, formula = formula_builder() in
+	let ref_num_vars = ref num_vars in
+  	let cnf_formula = qbf_to_cnf ref_num_vars formula in
+	twoqbf_formula_to_qdimacs file !ref_num_vars forallVars existsVars cnf_formula;;
+	
 
 (*----------------------------------------------------------------------------------*)
 (* launch pn_and_traces_to_formula_fullrunClustering_pb *)
@@ -92,15 +104,33 @@ let solve_clustering_and_save type_of_clustering (pn : pn) (traces : alphabet ar
 		fprintf oc "ĉ(c) : %f\n\n" (1. -. ratio);
 		List.iter (fun (centroid,traces,ratio)-> 
 				fprintf oc "(";
-				List.iter (fun a -> ( if a<> "ww" then fprintf oc "%s" a) ) centroid; fprintf oc ", [";
-				List.iter (fun trace -> (List.iter (fun a -> ( if (a<> "ww" && a<> "w") then fprintf oc "%s" a) ) trace; 
+				List.iter (fun a -> ( if a<> "ww" then fprintf oc "%s " a) ) centroid; fprintf oc ", [";
+				List.iter (fun trace -> (List.iter (fun a -> ( if (a<> "ww" && a<> "w") then fprintf oc "%s " a) ) trace; 
 				fprintf oc "  ") ) traces; fprintf oc "],";
 				fprintf oc "%f" ratio;
 				fprintf oc ")\n";
 			   ) cluster ;
 		fprintf oc "(nc, [ ";
-		List.iter (fun trace -> (List.iter (fun a -> ( if (a<> "ww" && a<> "w") then fprintf oc "%s" a) ) trace; fprintf oc "  ") ) nc; 
+		List.iter (fun trace -> (List.iter (fun a -> ( if (a<> "ww" && a<> "w") then fprintf oc "%s " a) ) trace; fprintf oc "  ") ) nc; 
 		fprintf oc "],%f)\n" ratio;
 		close_out oc;
-	end;
+	end;;
+
+
+(*----------------------------------------------------------------------------------*)
+(* launch pn_and_traces_to_formula_fullrunClustering_pb *)
+(* save result in rfile *)
+let solve_alignment_edit_distance (pn : pn) (traces : alphabet array list) fonction divide_n_by size_of_d=
+	let n = (fold_left max (length pn.transitions) (map Array.length traces))
+	and sigma = sort_uniq compare ((map (fun t -> t.lambda) pn.transitions) @ (concat (map Array.to_list traces))) in
+	let s = solve_enriched_formula "alignment.pb" (fun () ->
+							fonction
+							(add_ww_at_the_end pn)
+							(List.map (fun t -> log_to_pn_with_w_at_the_end t) traces)
+							("w" :: sigma) 
+							(n/divide_n_by)
+							size_of_d)
+							in 
+	();;
+
 

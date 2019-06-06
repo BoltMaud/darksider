@@ -10,7 +10,9 @@ open Printf
 open Solve_formulas_PB
 open Alignment_PB
 open FullrunClustering_PB
-open SubnetClustering_PB;;
+open SubnetClustering_PB
+open Alignment_PB_newEditDistance
+open Anti_alignment_PB_newEditDistance;;
 
 (*------------------------------------------------------------*)
 (* index to get argvs *)
@@ -18,11 +20,11 @@ let i = ref 1 ;;
 
 (*-------------------------------------------------------------*)
 (* if -p in argvs then move index i*)
-if (Array.mem "-p" Sys.argv) then 
+(*if (Array.mem "-p" Sys.argv) then 
 				begin pb_solver:=Sys.argv.(2) ; 
 				      i:=3 ; 
 				end
-			     else () ;;
+			     else () ;;*)
 
 (*-------------------------------------------------------------*)
 (*
@@ -32,6 +34,7 @@ if (Array.mem "-p" Sys.argv) then
 	-SA : subnet-alignments
 	-help : afficher les commandes
 *)
+
 match Sys.argv.(!i) with 
 |"-FC" -> 
 	let tpn_file = Sys.argv.(!i+1)
@@ -57,6 +60,20 @@ match Sys.argv.(!i) with
 	let _, _, _, _ = optimal_multialignment_pns (add_ww (read_pn tpn_file)) (List.map log_to_pn_with_w (read_logs tr_file)) d in
 	() (* TODO write in file *)
 
+|"-eD" -> 
+	let tpn_file = Sys.argv.(!i+1) 
+	and tr_file = Sys.argv.(!i+2)
+	and divide_n_by =  int_of_string Sys.argv.(!i+3)  
+	and size_of_d =  int_of_string Sys.argv.(!i+4) in 
+	solve_alignment_edit_distance (read_pn tpn_file) (read_logs tr_file) newEditDistanceForAlignment divide_n_by size_of_d
+
+|"-AA" -> 
+	let tpn_file = Sys.argv.(!i+1) 
+	and tr_file = Sys.argv.(!i+2)
+	and divide_n_by =  int_of_string Sys.argv.(!i+3)  
+	and size_of_d =  int_of_string Sys.argv.(!i+4) in
+	solve_alignment_edit_distance (read_pn tpn_file) (read_logs tr_file) antiAlignment divide_n_by size_of_d
+
 |"-SA" -> printf "TODO"
 
 |("-help" | _ )  ->
@@ -73,11 +90,17 @@ match Sys.argv.(!i) with
 	<nb_clusters> : number maximal of clusters 
 	<max_nb_transitions> : maximum number of transitions per centroid
 	<out_file> : file to store the result \n";
-	printf "-MA [options] [parameters] : Multialigner 
+	(*printf "-MA [options] [parameters] : Multialigner 
 	<file.tpn> : petri net 
 	<file.tr> : traces 
-	<d> : distance max between traces and full run\n";
-	printf "-p <solver cmd>: option to change PB solver (tested for sat4j and minisat+) \n";
+	<d> : distance max between traces and full run\n";*)
+	printf "-eD [options] [parameters] : Alignment with SAT edit distance 
+	<file.tpn> : petri net 
+	<file.tr> : traces";
+	printf "\n-AA [options] [parameters] : Anti-alignment with SAT edit distance 
+	<file.tpn> : petri net 
+	<file.tr> : traces";
+	printf "\n-p <solver cmd>: option to change PB solver (tested for sat4j and minisat+) \n";
 	printf "-help : display this awesome list\n";
 	
 
