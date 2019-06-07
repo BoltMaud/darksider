@@ -7,21 +7,37 @@
 
 ## INSTALLATION
 
- `make 
+ `make `
 
-## EXAMPLE OF UTILISATION 
+## AVAILABLES COMMANDS  
 
-### For a full run clustering  
+### Full run clustering  
 
 `./darksider -FC <petri_net_fil.tpn> <traces.tr> <distance_centroids-traces> <number_of_clusters> <output_file>`
 
-### For a subnet clustering 
+### Subnet clustering 
 
 `./darksider -SC <petri_net_fil.tpn> <traces.tr> <distance_centroids-traces> <number_of_clusters> <number_max_transitions_centroid> <output_file>`
+
+## Alignment with Edit distance
+
+`./darksider -eD <petri_net_fil.tpn> <traces.tr> <quotient*> <maximal_number_of_diff>`
+
+where *quotient* divise the maximal size of run, determined by the number of transition in the net.
+
+## Anti-alignment with Edit distance
+
+`./darksider -AA <petri_net_fil.tpn> <traces.tr> <quotient*>  <maximal_number_of_diff>`
+
+where *quotient* divise the maximal size of run, determined by the number of transition in the net.
+
 
 ### Help 
 	
 `./darksider -help `
+
+
+
 
 # FOLDERS 
 <pre>
