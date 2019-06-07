@@ -1,17 +1,26 @@
->Author : Boltenhagen Mathilde, Chatain Thomas <br>
->Date : 01.2019
+>Author : Boltenhagen Mathilde, Chatain Thomas, Josep Carmona <br>
+>Date : 07.2019
+
+## INTRODUCTION 
+
+This project implements _Process Mining_ algorithms with a _SAT encoding_ for optimal results and _verification_. SAT formulas of algorithms are created with ocaml programs and solved by a SAT solver. 
 
 ## ENVIRONNEMENT 
 
-- need minisat+ or any other PB solver. Darksider was also tried with sat4j
+- minisat+ or any other PB solver. Darksider was also tried with sat4j
+- ocaml
 
 ## INSTALLATION
+
+To compile the files, just launch the next command : 
 
  `make `
 
 ## AVAILABLES COMMANDS  
 
 ### Full run clustering  
+
+Presented in [TODO], full run clustering returns clusters with full runs centroids. 
 
 `./darksider -FC <petri_net_fil.tpn> <traces.tr> <distance_centroids-traces> <number_of_clusters> <output_file>`
 
